@@ -1,3 +1,4 @@
+Courtesy of Clarissa Littler
 * What is this document
  First off, this book is not a replacement for reviewing the material on the course site. It is, however, intended as a brief review of the material of this course up to the point of the midterm!
 * Bits, bytes, and counting
@@ -128,5 +129,3 @@ So how many things total can actually be described by n-bits?
 Well from above we know that the largest number that can be represented by n-bits is =2^n-1=, but that's for us starting to count from 0.
 
 The same way that if I have the numbers 0,1,2,3,4,5,6,7,8,9 then you can count them and get "10", this means that if I count 0, 1, 2, ..., up to =2^n-1= then you're counting 2^n numbers.
-
-So let's say you need to count three thousand things, we can play a really similar game to up above and 
