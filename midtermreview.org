@@ -1,0 +1,132 @@
+* What is this document
+ First off, this book is not a replacement for reviewing the material on the course site. It is, however, intended as a brief review of the material of this course up to the point of the midterm!
+* Bits, bytes, and counting
+** What is binary?
+To start, let's talk about how we our normal way of writing numbers works, also called decimal.
+
+When I write a number like 35116 this is---technically---just a different way of writing
+
+#+begin_example
+30000 + 5000 + 100 + 10 + 6
+#+end_example
+
+which itself can be rewritten as
+#+begin_example
+3*10^4 + 5*10^3 + 1*10^2 + 1*10 + 6
+#+end_example
+
+Okay so binary is the same thing as decimal except that instead of it being numbers 0-9 and powers of 10, it's 0 and 1 & powers of 2.
+
+so a binary number would look like
+#+begin_example
+11011101
+#+end_example
+which you can rewrite as
+#+begin_example
+1*2^7 + 1 * 2^6 + 0*2^5 + 1*2^4 + 1*2^3 + 1*2^2 + 0*2 + 1
+#+end_example
+which in decimal would be written as
+#+begin_example
+1*128 + 1 * 64 + 0 + 1*16 + 1*8 + 1 * 4 + 0 + 1
+#+end_example
+which is
+#+begin_example
+221
+#+end_example
+
+So that's not just a definition of binary it also teaches us how you convert from binary to decimal.
+
+A reasonable question at this point is "how big of a number can n-bits represent" and the answer is if you assume every bit is a 1 and add them all up you'll get =2^n -1= is the largest number.
+** Converting from decimal to binary
+But how do you convert from decimal to binary?
+
+It's easiest to explain with some examples.
+
+Let's say you have the number 3521.
+
+Then we're going to figure out what the /largest/ power of 2 is that's smaller than 3521.
+
+Here let's list out the powers of 2
+|  n |  2^n |
+|----+------|
+|  0 |    1 |
+|  1 |    2 |
+|  2 |    4 |
+|  3 |    8 |
+|  4 |   16 |
+|  5 |   32 |
+|  6 |   64 |
+|  7 |  128 |
+|  8 |  256 |
+|  9 |  512 |
+| 10 | 1024 |
+| 11 | 2048 |
+| 12 | 4096 |
+
+okay and we can stop there because 4096 is bigger than 3521.
+
+So the largest power of 2 that's /smaller/ than 3521 is 2^11, which is 2048. This automatically tells us we'll be representing 3521 as a 12-bit number (0 through 11 is 12 numbers total).
+
+so we start writing our number as
+
+#+begin_example
+1??? ???? ????
+#+end_example
+and I'm putting spaces between groups of 4 bits so it's easier to read, but it doesn't actually affect the "meaning" of the bits.
+
+So what do we have left?
+
+#+begin_example
+3521 - 2048 = 1473
+#+end_example
+
+Now what's the biggest power of 2 that's still less than 1473? Why it's 10, which is 1024,
+
+so now our number is
+#+begin_example
+11?? ???? ????
+#+end_example
+
+and our next part is
+#+begin_example
+1473 - 1024 = 449
+#+end_example
+so let's keep repeating the process: what's the largest power of 2 that's less than 449? Well it's 8 which is 256. So now we actually know *two* more bits
+
+#+begin_example
+1101 ???? ????
+#+end_example
+because we had to skip 9, which is 512, we put a zero in for it instead
+
+so continuing in ever more painful detail the remainder we have left is 
+#+begin_example
+449 - 256 = 193
+#+end_example
+
+which means we fill in the next bit as a 1
+
+#+begin_example
+1101 1??? ????
+#+end_example
+and are left with
+#+begin_example
+193 - 128 = 65
+#+end_example
+
+so we have
+#+begin_example
+1101 11?? ????
+#+end_example
+and a remainder of 1 but that's easy because the only way to get a 1 is if the last bit is a 1 and all the others that haven't been filled in are zeros. So our final binary number is
+
+#+begin_example
+1101 1100 0001
+#+end_example
+** How many things can be counted by n-bits?
+So how many things total can actually be described by n-bits?
+
+Well from above we know that the largest number that can be represented by n-bits is =2^n-1=, but that's for us starting to count from 0.
+
+The same way that if I have the numbers 0,1,2,3,4,5,6,7,8,9 then you can count them and get "10", this means that if I count 0, 1, 2, ..., up to =2^n-1= then you're counting 2^n numbers.
+
+So let's say you need to count three thousand things, we can play a really similar game to up above and 
